@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="./styles.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+        <title> Paige Reeves UCF Portfolio </title>
+    </head>
+    <body>
+        <div class="side">
+            <div class="about">
+                <img src="./assets/headshot.jpg" alt="Headshot" class="headshot">
+
+                <div class="intro">
+                    <div class="name">
+                        Paige Reeves
+                    </div>
+                    <div class="title">
+                        Digital Media MA Student @ UCF
+                    </div>
+                </div>
+                
+                <div class="description">
+                    This collection features work I have completed as part of the Digital Media MA program at the University of Central Florida.
+                </div>
+            </div>
+            <div class="links">
+                <a href="https://www.linkedin.com/in/paige-reeves-91424b264" target="_blank" class="link">
+                    LinkedIn
+                    <img src="./assets/link-light.png" alt="External Link Icon" class="icon">
+                </a>
+                <a href="https://github.com/rpaigemei" target="_blank" class="link">
+                    GitHub
+                    <img src="./assets/link-light.png" alt="External Link Icon" class="icon">
+                </a>
+                <a href="./assets/resume.pdf" target="_blank" class="link">
+                    Resume
+                    <img src="./assets/link-light.png" alt="External Link Icon" class="icon">
+                </a>
+            </div>
+        </div>
+        <div class="projects">
+            <div class="heading">
+                Projects
+            </div>
+
+            <div id="filters-container" class="filters"></div>
+
+            <div id="projects-container" class="cards"></div>
+
+            <script>
+                const projects = [
+                    {
+                        name: "Ratlock Holmes",
+                        description: "Project 1: Adventure Game",
+                        thumbnail: "./assets/thumbnails/ratlock-holmes.png",
+                        link: "./projects/ratlock-holmes.html",
+                        tags: ["p5.js", "DIG 5508"],
+                    },
+                    {
+                        name: "The Hidden Picture",
+                        description: "Project 2: Interactive Experience",
+                        thumbnail: "./assets/thumbnails/hidden-picture.png",
+                        link: "./projects/hidden-picture.html",
+                        tags: ["p5.js", "DIG 5508"],
+                    },
+                    {
+                        name: "3D Pearl",
+                        description: "Project 3: 3D",
+                        thumbnail: "./assets/thumbnails/pearl.png",
+                        link: "./projects/pearl.html",
+                        tags: ["p5.js", "DIG 5508"],
+                    },
+                    {
+                        name: "Lyracle",
+                        description: "Creative Project 2: Chance Operations",
+                        thumbnail: "./assets/thumbnails/lyracle.png",
+                        link: "./projects/lyracle.html",
+                        tags: ["react.js", "DIG 6647"],
+                    },
+                    {
+                        name: "Pinvasion",
+                        description: "Creative Project 3: Culture Jamming",
+                        thumbnail: "./assets/thumbnails/pinvasion.png",
+                        link: "./projects/pinvasion.html",
+                        tags: ["react.js", "DIG 6647"],
+                    },
+                    {
+                        name: "Neo the Comfort Cat",
+                        description: "Interactive Creative Project",
+                        thumbnail: "./assets/thumbnails/neo.png",
+                        link: "./projects/neo.html",
+                        tags: ["DIG 5487"],
+                    },
+                ];
+
+                const filters = [
+                    "All", "p5.js", "react.js", "DIG 5508", "DIG 6647", "DIG 5487"
+                ]
+
+                const projectsContainer = document.getElementById("projects-container");
+                const filtersContainer = document.getElementById("filters-container");
+
+                let activeFilter = "All";
+
+                function displayFilters() {
+                    filtersContainer.innerHTML = filters.map((filter) => `
+                        <div class="filter ${activeFilter === filter ? "active" : ""}" data-tag="${filter}">
+                            ${filter}
+                        </div>
+                    `).join("");
+                }
+
+                function displayProjects() {
+                    let filtered = activeFilter === "All" ? projects : projects.filter(p => p.tags.includes(activeFilter));
+
+                    projectsContainer.innerHTML = filtered.map((project) => `
+                        <a href="${project.link}" class="card">
+                            <img src="${project.thumbnail}" alt="Project Thumbnail" class="thumbnail">
+                            <div class="lower">
+                                <div class="info">
+                                    <div class="name">
+                                        ${project.name}
+                                    </div>
+                                    <div class="description">
+                                        ${project.description}
+                                    </div>
+                                </div>
+                                <div class="card-tags">
+                                    ${project.tags.map((tag) => `
+                                        <div class="tag">
+                                            ${tag}
+                                        </div>
+                                    `).join("")}
+                                </div>
+                            </div>
+                        </div>
+                    `).join("");
+                }
+
+                filtersContainer.addEventListener("click", (e) => {
+                    const clicked = e.target.dataset.tag;
+                    
+                    if (!clicked) {
+                        return;
+                    }
+
+                    activeFilter = clicked;
+
+                    displayFilters();
+                    displayProjects();
+                });
+
+                displayFilters();
+                displayProjects();
+            </script>
+        </div>
+    </body>
+</html>
